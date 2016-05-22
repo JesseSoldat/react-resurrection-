@@ -95,12 +95,13 @@ var Note = _react2['default'].createClass({
 
   save: function save() {
     var val = this.refs.newText.value;
-    alert("Save Note: " + val);
+    console.log(val);
+    this.props.onChange(val, this.props.index);
     this.setState({ editing: false });
   },
 
   'delete': function _delete() {
-    alert('deleting note');
+    this.props.onRemove(this.props.index);
   },
 
   renderDisplay: function renderDisplay() {
@@ -166,23 +167,42 @@ var Board = _react2['default'].createClass({
       }
     }
   },
+
   getInitialState: function getInitialState() {
     return {
       notes: ['Learn Node', 'Learn React', 'Learn Angular', 'Get a job', 'Enjoy life']
     };
   },
 
+  update: function update(newText, i) {
+    var arr = this.state.notes;
+    arr[i] = newText;
+    this.setState({ notes: arr });
+  },
+
+  remove: function remove(i) {
+    var arr = this.state.notes;
+    arr.splice(i, 1);
+    this.setState({ notes: arr });
+  },
+
+  eachNote: function eachNote(note, i) {
+    return _react2['default'].createElement(
+      Note,
+      { key: i,
+        index: i,
+        onChange: this.update,
+        onRemove: this.remove
+      },
+      note
+    );
+  },
+
   render: function render() {
     return _react2['default'].createElement(
       'div',
       { className: 'board' },
-      this.state.notes.map(function (note, i) {
-        return _react2['default'].createElement(
-          Note,
-          { key: i },
-          note
-        );
-      })
+      this.state.notes.map(this.eachNote)
     );
   }
 });
