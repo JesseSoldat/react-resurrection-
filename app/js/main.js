@@ -94,6 +94,8 @@ var Note = _react2['default'].createClass({
   },
 
   save: function save() {
+    var val = this.refs.newText.value;
+    alert("Save Note: " + val);
     this.setState({ editing: false });
   },
 
@@ -133,7 +135,7 @@ var Note = _react2['default'].createClass({
     return _react2['default'].createElement(
       'div',
       { className: 'note' },
-      _react2['default'].createElement('textarea', { defaultValue: this.props.children, id: 'textarea' }),
+      _react2['default'].createElement('textarea', { ref: 'newText', defaultValue: this.props.children, id: 'textarea' }),
       _react2['default'].createElement(
         'button',
         { onClick: this.save, id: 'save' },
@@ -151,16 +153,46 @@ var Note = _react2['default'].createClass({
   }
 });
 
+var Board = _react2['default'].createClass({
+  displayName: 'Board',
+
+  propTypes: {
+    count: function count(props, propName) {
+      if (typeof props[propName] !== 'number') {
+        return new Error('The count property must be a number');
+      }
+      if (props[propName] > 100) {
+        return new Error("Creating " + props[propName] + " notes is ridiculous");
+      }
+    }
+  },
+  getInitialState: function getInitialState() {
+    return {
+      notes: ['Learn Node', 'Learn React', 'Learn Angular', 'Get a job', 'Enjoy life']
+    };
+  },
+
+  render: function render() {
+    return _react2['default'].createElement(
+      'div',
+      { className: 'board' },
+      this.state.notes.map(function (note, i) {
+        return _react2['default'].createElement(
+          Note,
+          { key: i },
+          note
+        );
+      })
+    );
+  }
+});
+
 var anchor = document.querySelector('.anchor');
 
 _reactDom2['default'].render(_react2['default'].createElement(
   'div',
   null,
-  _react2['default'].createElement(
-    Note,
-    null,
-    'Hello World'
-  )
+  _react2['default'].createElement(Board, { count: 1 })
 ), anchor);
 
 },{"jquery":3,"react":169,"react-dom":4}],2:[function(require,module,exports){

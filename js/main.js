@@ -56,6 +56,8 @@ var Note = React.createClass({
   },
 
   save: function() {
+    var val = this.refs.newText.value;
+    alert("Save Note: "+val);
     this.setState({editing: false});
   },
 
@@ -80,7 +82,7 @@ var Note = React.createClass({
   renderForm: function(){
     return(
       <div className="note">
-        <textarea defaultValue={this.props.children} id="textarea"></textarea>
+        <textarea ref="newText" defaultValue={this.props.children} id="textarea"></textarea>
         <button onClick={this.save} id="save"><i className="fa fa-floppy-o" aria-hidden="true"></i></button>
       </div>
       );
@@ -95,12 +97,44 @@ var Note = React.createClass({
   }
 });
 
+var Board = React.createClass({
+  propTypes: {
+    count: function(props, propName) {
+      if (typeof props[propName] !== 'number'){
+        return new Error('The count property must be a number');
+      } 
+      if (props[propName] > 100) {
+        return new Error("Creating " + props[propName] + " notes is ridiculous")
+      }
+    }
+  },
+  getInitialState: function() {
+    return {
+      notes: [
+      'Learn Node',
+      'Learn React',
+      'Learn Angular',
+      'Get a job',
+      'Enjoy life'
+      ]
+    };
+  },
+
+  render: function() {
+    return (<div className="board">
+              {this.state.notes.map(function(note, i){
+                return (
+                  <Note key={i}>{note}</Note>);
+              })}
+          </div>
+          );
+  }
+});
+
 var anchor = document.querySelector('.anchor');
 
 ReactDom.render(<div>
-                  <Note>Hello World</Note>
-               
-
+                  <Board count={1}/>
                 </div>, anchor);
 
  

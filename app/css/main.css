@@ -2172,12 +2172,18 @@
 body {
   background: #e2ebf3; }
 
+div.board {
+  background-color: #eab92d;
+  width: 100%;
+  height: 500px; }
+
 div.note {
   height: 150px;
   width: 150px;
   background-color: yellow;
-  margin: 2px 0;
+  margin: 15px 15px;
   position: relative;
+  float: left;
   box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.2);
   cursor: -webkit-grab; }
 
