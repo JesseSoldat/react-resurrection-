@@ -27,10 +27,35 @@ var HelloWorld = _react2['default'].createClass({
       )
     );
   }
+
 });
+
+var MyComponent = _react2['default'].createClass({
+  displayName: 'MyComponent',
+
+  render: function render() {
+    return _react2['default'].createElement(
+      'div',
+      null,
+      _react2['default'].createElement(
+        'h2',
+        null,
+        this.props.text
+      )
+    );
+  }
+});
+
 var anchor = document.querySelector('.anchor');
 
-_reactDom2['default'].render(_react2['default'].createElement(HelloWorld, null), anchor);
+_reactDom2['default'].render(_react2['default'].createElement(
+  'div',
+  null,
+  _react2['default'].createElement(HelloWorld, null),
+  _react2['default'].createElement(MyComponent, { text: 'Hello World' }),
+  _react2['default'].createElement(MyComponent, { text: 'How are you?' }),
+  _react2['default'].createElement(MyComponent, { text: 'Goodbye' })
+), anchor);
 
 },{"react":168,"react-dom":3}],2:[function(require,module,exports){
 // shim for using process in browser
