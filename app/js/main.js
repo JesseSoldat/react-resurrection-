@@ -15,8 +15,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-console.log('Hello, World');
-
 // $(document).ready(function() {
 //     alert($('.anchor').attr('id')); });
 
@@ -34,9 +32,7 @@ var HelloWorld = _react2['default'].createClass({
       )
     );
   }
-
 });
-
 var MyComponent = _react2['default'].createClass({
   displayName: 'MyComponent',
 
@@ -57,30 +53,101 @@ var MyComponent = _react2['default'].createClass({
     );
   }
 });
+var Checkbox = _react2['default'].createClass({
+  displayName: 'Checkbox',
+
+  getInitialState: function getInitialState() {
+    return { checked: false };
+  },
+  handleCheck: function handleCheck() {
+    this.setState({ checked: !this.state.checked });
+  },
+  render: function render() {
+    var msg;
+    if (this.state.checked) {
+      msg = "checked";
+    } else {
+      msg = "unchecked";
+    }
+    return _react2['default'].createElement(
+      'div',
+      null,
+      _react2['default'].createElement('input', { type: 'checkbox', onChange: this.handleCheck }),
+      _react2['default'].createElement(
+        'p',
+        null,
+        msg
+      )
+    );
+  }
+});
 
 var Note = _react2['default'].createClass({
   displayName: 'Note',
 
-  render: function render() {
+  getInitialState: function getInitialState() {
+    return { editing: false };
+  },
+
+  edit: function edit() {
+    this.setState({ editing: true });
+  },
+
+  save: function save() {
+    this.setState({ editing: false });
+  },
+
+  'delete': function _delete() {
+    alert('deleting note');
+  },
+
+  renderDisplay: function renderDisplay() {
     return _react2['default'].createElement(
       'div',
       { className: 'note' },
       _react2['default'].createElement(
         'p',
         null,
-        'Note'
+        this.props.children
       ),
       _react2['default'].createElement(
-        'button',
-        { id: 'pencil' },
-        _react2['default'].createElement('i', { className: 'fa fa-pencil', 'aria-hidden': 'true' })
-      ),
-      _react2['default'].createElement(
-        'button',
-        { id: 'trash' },
-        _react2['default'].createElement('i', { className: 'fa fa-trash', 'aria-hidden': 'true' })
+        'span',
+        null,
+        _react2['default'].createElement(
+          'button',
+          { onClick: this.edit,
+            id: 'pencil' },
+          _react2['default'].createElement('i', { className: 'fa fa-pencil', 'aria-hidden': 'true' })
+        ),
+        _react2['default'].createElement(
+          'button',
+          { onClick: this['delete'],
+            id: 'trash' },
+          _react2['default'].createElement('i', { className: 'fa fa-trash', 'aria-hidden': 'true' })
+        )
       )
     );
+  },
+
+  renderForm: function renderForm() {
+    return _react2['default'].createElement(
+      'div',
+      { className: 'note' },
+      _react2['default'].createElement('textarea', { defaultValue: this.props.children, id: 'textarea' }),
+      _react2['default'].createElement(
+        'button',
+        { onClick: this.save, id: 'save' },
+        _react2['default'].createElement('i', { className: 'fa fa-floppy-o', 'aria-hidden': 'true' })
+      )
+    );
+  },
+
+  render: function render() {
+    if (this.state.editing) {
+      return this.renderForm();
+    } else {
+      return this.renderDisplay();
+    }
   }
 });
 
@@ -89,15 +156,11 @@ var anchor = document.querySelector('.anchor');
 _reactDom2['default'].render(_react2['default'].createElement(
   'div',
   null,
-  _react2['default'].createElement(HelloWorld, null),
-  _react2['default'].createElement(MyComponent, { text: 'Hello World' }),
   _react2['default'].createElement(
-    MyComponent,
-    { text: 'How are you?' },
-    'I am fine'
-  ),
-  _react2['default'].createElement(MyComponent, { text: 'Goodbye' }),
-  _react2['default'].createElement(Note, null)
+    Note,
+    null,
+    'Hello World'
+  )
 ), anchor);
 
 },{"jquery":3,"react":169,"react-dom":4}],2:[function(require,module,exports){
