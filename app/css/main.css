@@ -2221,4 +2221,14 @@ div.note p {
   height: 100px;
   margin: 0 auto; }
 
+#addBtn {
+  background-color: lightgreen;
+  border: 0;
+  border-radius: 7px;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  margin: 5px;
+  box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.2); }
+
 /*# sourceMappingURL=main.css.map */

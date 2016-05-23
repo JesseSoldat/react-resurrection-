@@ -114,13 +114,18 @@ var Board = React.createClass({
   getInitialState: function() {
     return {
       notes: [
-      'Learn Node',
-      'Learn React',
-      'Learn Angular',
-      'Get a job',
-      'Enjoy life'
+      // 'Learn Node',
+      // 'Learn React',
+      // 'Learn Angular',
+      // 'Get a job',
+      // 'Enjoy life'
       ]
     };
+  },
+  addNote: function(text) { 
+    var arr = this.state.notes;
+    arr.push(text);
+    this.setState({notes: arr});
   },
 
   update: function (newText, i) {
@@ -150,6 +155,7 @@ var Board = React.createClass({
   render: function() {
     return (<div className="board">
               {this.state.notes.map(this.eachNote)}
+              <button id="addBtn" onClick={this.addNote.bind(null, "New Note")}><i className="fa  fa-2x fa-plus-square" aria-hidden="true"></i></button>
           </div>
           );
   }

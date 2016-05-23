@@ -170,8 +170,19 @@ var Board = _react2['default'].createClass({
 
   getInitialState: function getInitialState() {
     return {
-      notes: ['Learn Node', 'Learn React', 'Learn Angular', 'Get a job', 'Enjoy life']
+      notes: [
+        // 'Learn Node',
+        // 'Learn React',
+        // 'Learn Angular',
+        // 'Get a job',
+        // 'Enjoy life'
+      ]
     };
+  },
+  addNote: function addNote(text) {
+    var arr = this.state.notes;
+    arr.push(text);
+    this.setState({ notes: arr });
   },
 
   update: function update(newText, i) {
@@ -202,7 +213,12 @@ var Board = _react2['default'].createClass({
     return _react2['default'].createElement(
       'div',
       { className: 'board' },
-      this.state.notes.map(this.eachNote)
+      this.state.notes.map(this.eachNote),
+      _react2['default'].createElement(
+        'button',
+        { id: 'addBtn', onClick: this.addNote.bind(null, "New Note") },
+        _react2['default'].createElement('i', { className: 'fa  fa-2x fa-plus-square', 'aria-hidden': 'true' })
+      )
     );
   }
 });
