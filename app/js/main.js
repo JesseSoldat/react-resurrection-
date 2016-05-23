@@ -89,6 +89,18 @@ var Note = _react2['default'].createClass({
     return { editing: false };
   },
 
+  componentWillMount: function componentWillMount() {
+    this.style = {
+      right: this.randomBetween(0, window.innerWidth - 150) + 'px',
+      top: this.randomBetween(0, window.innerHeight - 150) + 'px',
+      transform: 'rotate(' + this.randomBetween(-10, 10) + 'deg)'
+    };
+  },
+
+  randomBetween: function randomBetween(min, max) {
+    return min + Math.ceil(Math.random() * max);
+  },
+
   edit: function edit() {
     this.setState({ editing: true });
   },
@@ -107,7 +119,7 @@ var Note = _react2['default'].createClass({
   renderDisplay: function renderDisplay() {
     return _react2['default'].createElement(
       'div',
-      { className: 'note' },
+      { className: 'note', style: this.style },
       _react2['default'].createElement(
         'p',
         null,
@@ -135,7 +147,7 @@ var Note = _react2['default'].createClass({
   renderForm: function renderForm() {
     return _react2['default'].createElement(
       'div',
-      { className: 'note' },
+      { className: 'note', style: this.style },
       _react2['default'].createElement('textarea', { ref: 'newText', defaultValue: this.props.children, id: 'textarea' }),
       _react2['default'].createElement(
         'button',
@@ -179,15 +191,24 @@ var Board = _react2['default'].createClass({
       ]
     };
   },
+
+  nextId: function nextId() {
+    this.uniqueId = this.uniqueId || 0;
+    return this.uniqueId++;
+  },
+
   addNote: function addNote(text) {
     var arr = this.state.notes;
-    arr.push(text);
+    arr.push({
+      id: this.nextId(),
+      note: text
+    });
     this.setState({ notes: arr });
   },
 
   update: function update(newText, i) {
     var arr = this.state.notes;
-    arr[i] = newText;
+    arr[i].note = newText;
     this.setState({ notes: arr });
   },
 
@@ -200,12 +221,12 @@ var Board = _react2['default'].createClass({
   eachNote: function eachNote(note, i) {
     return _react2['default'].createElement(
       Note,
-      { key: i,
+      { key: note.id,
         index: i,
         onChange: this.update,
         onRemove: this.remove
       },
-      note
+      note.note
     );
   },
 
